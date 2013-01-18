@@ -15,5 +15,7 @@
     "clone" : "0.1.x"
   },
   "devDependencies": {
+    "mongoose" : "3.5.x",
+    "mocha" : "1.8.x"
   }
 }
