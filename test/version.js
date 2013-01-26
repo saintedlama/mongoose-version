@@ -39,6 +39,13 @@ describe('version', function() {
             });
         });
     });
-    
-    
+
+    it('should accept options as string', function() {
+        var testSchema = new Schema({ name : String });
+        testSchema.plugin(version, 'should_accept_string');
+
+        var Test = mongoose.model('should_accept_string_origin_model', testSchema);
+
+        assert.equal(Test.VersionedModel.collection.name, 'should_accept_string');
+    });
 })

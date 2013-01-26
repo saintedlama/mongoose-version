@@ -39,6 +39,8 @@ model of page, for example for querying old versions of a document.
 *Attention* mongoose-version will increment the original mongoose model version using the increment method. 
 Read [this blog post](http://aaronheckmann.blogspot.co.at/2012/06/mongoose-v3-part-1-versioning.html) for more details.
 
-Option keys and defaults
+## Option keys and defaults
 * collection: name of the collection to persist versions to. The default is 'versions'. You should supply this option if you're using mongoose-version on more than one schema.
 * Options are passed to mongoose as settings, so you may use any [option supported by mongoose](http://mongoosejs.com/docs/guide.html#options) 
+
+In case you only want to specify the collection name, you can pass a string instance to options that is taken as collection name.
