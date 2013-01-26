@@ -41,6 +41,7 @@ Read [this blog post](http://aaronheckmann.blogspot.co.at/2012/06/mongoose-v3-pa
 
 ## Option keys and defaults
 * collection: name of the collection to persist versions to. The default is 'versions'. You should supply this option if you're using mongoose-version on more than one schema.
+* logError: specifies if a console.log message should be written when the versioned model could not be persisted. Default `false`
 * Options are passed to mongoose as settings, so you may use any [option supported by mongoose](http://mongoosejs.com/docs/guide.html#options) 
 
 In case you only want to specify the collection name, you can pass a string instance to options that is taken as collection name.
