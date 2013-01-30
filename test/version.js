@@ -40,6 +40,31 @@ describe('version', function() {
         });
     });
 
+    it('should save a version model when saving origin model twice', function(done) {
+        var testSchema = new Schema({ name : String });
+        testSchema.plugin(version, { collection : 'should_save_version_of_origin_model_versions_twice' });
+
+        var Test = mongoose.model('should_save_version_of_origin_model_twice', testSchema);
+
+        var test = new Test({ name: 'franz' });
+        test.save(function(err) {
+            assert.ifError(err);
+
+            test.name = 'hugo';
+
+            test.save(function(err) {
+                assert.ifError(err);
+
+                Test.VersionedModel.findOne({ refId : test._id, refVersion : test.__v }, function(err, versionedModel) {
+                    assert.ifError(err);
+                    assert.ok(versionedModel);
+
+                    done();
+                });
+            });
+        });
+    });
+    
     it('should accept options as string', function() {
         var testSchema = new Schema({ name : String });
         testSchema.plugin(version, 'should_accept_string');
@@ -47,5 +72,57 @@ describe('version', function() {
         var Test = mongoose.model('should_accept_string_origin_model', testSchema);
 
         assert.equal(Test.VersionedModel.collection.name, 'should_accept_string');
+    });
+
+    it('should save a version model in an array when using "array" strategy', function(done) {
+        var testSchema = new Schema({ name : String });
+        testSchema.plugin(version, { strategy : 'array', collection : 'should_save_version_in_array' });
+
+        var Test = mongoose.model('should_save_version_in_array_origin_model', testSchema);
+
+        var test = new Test({ name: 'franz' });
+        test.save(function(err) {
+            assert.ifError(err);
+
+            Test.VersionedModel.findOne({ refId : test._id}, function(err, versionedModel) {
+                assert.ifError(err);
+                assert.ok(versionedModel);
+
+                assert.equal(versionedModel.versions.length, 1);
+
+                done();
+            });
+        });
+    });
+
+    it('should keep maxVersions of version model in an array when using "array" strategy', function(done) {
+        var testSchema = new Schema({ name : String });
+        testSchema.plugin(version, { strategy : 'array', maxVersions : 1, collection : 'should_keep_only_max_versions' });
+
+        var Test = mongoose.model('should_keep_only_max_versions_origin_model', testSchema);
+
+        var test = new Test({ name: 'franz' });
+        
+        // Save one generates a version
+        test.save(function(err) {
+            assert.ifError(err);
+
+            test.name = 'hugo';
+
+            // Save two generates a version
+            test.save(function(err) {
+                assert.ifError(err);
+
+                Test.VersionedModel.findOne({ refId : test._id}, function(err, versionedModel) {
+                    assert.ifError(err);
+                    assert.ok(versionedModel);
+
+                    // expected versions in array: 1
+                    assert.equal(versionedModel.versions.length, 1);
+
+                    done();
+                });
+            });
+        });
     });
 })

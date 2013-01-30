@@ -42,6 +42,9 @@ Read [this blog post](http://aaronheckmann.blogspot.co.at/2012/06/mongoose-v3-pa
 ## Option keys and defaults
 * collection: name of the collection to persist versions to. The default is 'versions'. You should supply this option if you're using mongoose-version on more than one schema.
 * logError: specifies if a console.log message should be written when the versioned model could not be persisted. Default `false`
-* Options are passed to mongoose as settings, so you may use any [option supported by mongoose](http://mongoosejs.com/docs/guide.html#options) 
+* surpressVersionIncrement: mongoose-version will increment the version of the saved model before saving the model. To turn of auto version increment set this option to true. Default: `false`
+* strategy: mongoose-version allows versioned document to be saved as multiple documents in a collection or in a single document in a version array. In case you want to save documents in an array specify `array` strategy, for storing versioned documents in multiple documents specify `collection` strategy. Default `collection`.
+* maxVersions: Only valid for `array` strategy. Specifies how many historic versions of a document should be kept. Defaults to `Number.MAX_VALUE`.
+* Options are passed to the newly created mongoose as settings, so you may use any [option supported by mongoose](http://mongoosejs.com/docs/guide.html#options) 
 
 In case you only want to specify the collection name, you can pass a string instance to options that is taken as collection name.
