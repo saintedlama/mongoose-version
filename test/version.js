@@ -74,6 +74,13 @@ describe('version', function() {
         assert.equal(Test.VersionedModel.collection.name, 'should_accept_string');
     });
 
+    it('should throw for unknown strategies', function() {
+        var testSchema = new Schema({ name : String });
+        assert.throws(function() {
+            testSchema.plugin(version, { strategy: 'hugo' });
+        });
+    });
+    
     it('should save a version model in an array when using "array" strategy', function(done) {
         var testSchema = new Schema({ name : String });
         testSchema.plugin(version, { strategy : 'array', collection : 'should_save_version_in_array' });
