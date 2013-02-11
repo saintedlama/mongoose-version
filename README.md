@@ -46,3 +46,4 @@ In case you only want to specify the collection name, you can pass a string inst
 
 # Changelog
 * 0.2.0 Make `array` the default strategy and set `suppressVersionIncrement` default to true
+* 0.2.1 Corrects a problem of the used clone implementation when cloning models
