@@ -132,4 +132,24 @@ describe('version', function() {
             });
         });
     });
-})
+
+    it('should save documentProperty as well as update and create dates', function(done) {
+        var testSchema = new Schema({ name : String });
+        testSchema.plugin(version, { strategy : 'array', documentProperty : 'name', collection : 'should_save_document_identifier_and_dates' });
+
+        var Test = mongoose.model('should_save_document_identifier_and_dates_model', testSchema);
+
+        var test = new Test({ name: 'franz' });
+        test.save(function(err) {
+            assert.ifError(err);
+
+            Test.VersionedModel.findOne({ refId : test._id}, function(err, versionedModel) {
+                assert.ok(versionedModel.created);
+                assert.ok(versionedModel.modified);
+                assert.equal(versionedModel.name, 'franz');
+
+                done();
+            });
+        });
+    });
+});
