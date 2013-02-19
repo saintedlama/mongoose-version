@@ -12,10 +12,10 @@
     "version"
   ],
   "dependencies": {
-    "clone" : "0.1.x"
+    "clone" : "0.1.x",
+    "mongoose" : "3.5.x"
   },
   "devDependencies": {
-    "mongoose" : "3.5.x",
     "mocha" : "1.8.x"
   },
   "scripts": {
