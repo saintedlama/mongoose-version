@@ -1,4 +1,4 @@
-# Passport-Local Mongoose
+# Passport-Local Mongoose [![Build Status](https://travis-ci.org/saintedlama/mongoose-version.png?branch=master)](https://travis-ci.org/saintedlama/mongoose-version)
 Mongoose plugin to save document data versions. Documents are saved to a "versioned" document collection before saving
 original documents and kept for later use.
 
