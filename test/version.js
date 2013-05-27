@@ -5,11 +5,17 @@ var assert = require('assert'),
 
 describe('version', function() {
     before(function(done) {
-        mongoose.connect('mongodb://localhost/mongooseversiontest', function(err) {
+        mongoose.connect('mongodb://127.0.0.1/mongooseversiontest', function(err) {
             done(err);
         });
     });
 
+    after(function(done) {
+        mongoose.disconnect(function(err) {
+            done(err);
+        });
+    });
+    
     describe('#VersionModel', function() {
         it('should expose a version model in the original schema', function() {
             var testSchema = new Schema();

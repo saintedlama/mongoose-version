@@ -16,7 +16,8 @@
     "mongoose": "3.5.x"
   },
   "devDependencies": {
-    "mocha" : "1.8.x"
+    "mocha" : "1.8.x",
+    "mongoose-text-search": "0.0.2"
   },
   "scripts": {
     "test": "mocha"
