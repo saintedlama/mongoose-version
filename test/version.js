@@ -1,21 +1,13 @@
-var assert = require('assert'),
-    mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    version = require('../lib/version');
+var expect = require('chai').expect;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var mongotest = require('./mongotest');
+var version = require('../lib/version');
 
 describe('version', function() {
-    before(function(done) {
-        mongoose.connect('mongodb://127.0.0.1/mongooseversiontest', function(err) {
-            done(err);
-        });
-    });
+    beforeEach(mongotest.prepareDb('mongodb://localhost/mongoose_version_tests'));
+    afterEach(mongotest.disconnect());
 
-    after(function(done) {
-        mongoose.disconnect(function(err) {
-            done(err);
-        });
-    });
-    
     describe('#VersionModel', function() {
         it('should expose a version model in the original schema', function() {
             var testSchema = new Schema();
@@ -23,7 +15,7 @@ describe('version', function() {
             
             var Test = mongoose.model('should_expose_version_model', testSchema);
             
-            assert.ok(Test.VersionedModel);
+            expect(Test.VersionedModel).to.be.ok;
         });
     });
     
@@ -35,12 +27,12 @@ describe('version', function() {
 
         var test = new Test({ name: 'franz' });
         test.save(function(err) {
-            assert.ifError(err);
+            expect(err).to.not.exist;
             
             Test.VersionedModel.find({ refId : test._id, refVersion : test.__v }, function(err, versionedModel) {
-                assert.ifError(err);
-                assert.ok(versionedModel);
-                
+                expect(err).to.not.exist;
+                expect(versionedModel).to.be.ok;
+
                 done();
             });
         });
@@ -54,16 +46,19 @@ describe('version', function() {
 
         var test = new Test({ name: 'franz' });
         test.save(function(err) {
-            assert.ifError(err);
+            expect(err).to.not.exist;
 
             test.name = 'hugo';
 
             test.save(function(err) {
-                assert.ifError(err);
+                expect(err).to.not.exist;
 
-                Test.VersionedModel.findOne({ refId : test._id, refVersion : test.__v }, function(err, versionedModel) {
-                    assert.ifError(err);
-                    assert.ok(versionedModel);
+                Test.VersionedModel.findOne({
+                    refId : test._id,
+                    versions : { $elemMatch : { refVersion : test.__v }}
+                }, function(err, versionedModel) {
+                    expect(err).to.not.exist;
+                    expect(versionedModel).to.be.ok;
 
                     done();
                 });
@@ -77,14 +72,15 @@ describe('version', function() {
 
         var Test = mongoose.model('should_accept_string_origin_model', testSchema);
 
-        assert.equal(Test.VersionedModel.collection.name, 'should_accept_string');
+        expect(Test.VersionedModel.collection.name).to.equal('should_accept_string');
     });
 
     it('should throw for unknown strategies', function() {
         var testSchema = new Schema({ name : String });
-        assert.throws(function() {
+
+        expect(function() {
             testSchema.plugin(version, { strategy: 'hugo' });
-        });
+        }).to.throw(Error);
     });
     
     it('should save a version model in an array when using "array" strategy', function(done) {
@@ -95,13 +91,13 @@ describe('version', function() {
 
         var test = new Test({ name: 'franz' });
         test.save(function(err) {
-            assert.ifError(err);
+            expect(err).to.not.exist;
 
             Test.VersionedModel.findOne({ refId : test._id}, function(err, versionedModel) {
-                assert.ifError(err);
-                assert.ok(versionedModel);
+                expect(err).to.not.exist;
+                expect(versionedModel).to.be.ok;
 
-                assert.equal(versionedModel.versions.length, 1);
+                expect(versionedModel.versions.length).to.equal(1);
 
                 done();
             });
@@ -118,20 +114,20 @@ describe('version', function() {
         
         // Save one generates a version
         test.save(function(err) {
-            assert.ifError(err);
+            expect(err).to.not.exist;
 
             test.name = 'hugo';
 
             // Save two generates a version
             test.save(function(err) {
-                assert.ifError(err);
+                expect(err).to.not.exist;
 
                 Test.VersionedModel.findOne({ refId : test._id}, function(err, versionedModel) {
-                    assert.ifError(err);
-                    assert.ok(versionedModel);
+                    expect(err).to.not.exist;
+                    expect(versionedModel).to.be.ok;
 
                     // expected versions in array: 1
-                    assert.equal(versionedModel.versions.length, 1);
+                    expect(versionedModel.versions.length).to.equal(1);
 
                     done();
                 });
@@ -147,12 +143,12 @@ describe('version', function() {
 
         var test = new Test({ name: 'franz' });
         test.save(function(err) {
-            assert.ifError(err);
+            expect(err).to.not.exist;
 
             Test.VersionedModel.findOne({ refId : test._id}, function(err, versionedModel) {
-                assert.ok(versionedModel.created);
-                assert.ok(versionedModel.modified);
-                assert.equal(versionedModel.name, 'franz');
+                expect(versionedModel.created).to.be.ok;
+                expect(versionedModel.modified).to.be.ok;
+                expect(versionedModel.name).to.equal('franz');
 
                 done();
             });
