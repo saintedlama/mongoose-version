@@ -47,4 +47,63 @@ describe('issues', function () {
             });
         });
     });
+
+    it('should delete versioned model when deleting the model', function(done) {
+        var UserSchema = new Schema({});
+
+        UserSchema.plugin(version, {
+            logError: true,
+            removeVersions: true,
+            collection: 'User_should_be_deleted_when_model_is_deleted_versions'
+        });
+
+        var User = mongoose.model('User_should_be_deleted_when_model_is_deleted', UserSchema);
+
+        var user = new User({});
+
+        user.save(function(err) {
+            expect(err).to.not.exist;
+
+            user.remove(function(err) {
+                expect(err).to.not.exist;
+
+                User.VersionedModel.find({}, function(err, models) {
+                    expect(err).to.not.exist;
+                    expect(models).to.be.empty;
+
+                    done();
+                });
+            });
+        });
+    });
+
+    it('should delete versioned model when deleting the model in collection mode', function(done) {
+        var UserSchema = new Schema({});
+
+        UserSchema.plugin(version, {
+            logError: true,
+            removeVersions: true,
+            collection: 'User_should_be_deleted_when_model_is_deleted_in_collection_mode_versions',
+            strategy: 'collection'
+        });
+
+        var User = mongoose.model('User_should_be_deleted_when_model_is_in_collection_mode_deleted', UserSchema);
+
+        var user = new User({});
+
+        user.save(function(err) {
+            expect(err).to.not.exist;
+
+            user.remove(function(err) {
+                expect(err).to.not.exist;
+
+                User.VersionedModel.find({}, function(err, models) {
+                    expect(err).to.not.exist;
+                    expect(models).to.be.empty;
+
+                    done();
+                });
+            });
+        });
+    });
 });

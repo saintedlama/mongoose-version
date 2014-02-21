@@ -41,6 +41,7 @@ model of page, for example for querying old versions of a document.
 * strategy: mongoose-version allows versioned document to be saved as multiple documents in a collection or in a single document in a version array. In case you want to save documents in an array specify `array` strategy, for storing versioned documents in multiple documents specify `collection` strategy. Default `array`.
 * maxVersions: Only valid for `array` strategy. Specifies how many historic versions of a document should be kept. Defaults to `Number.MAX_VALUE`.
 * mongoose: Pass a mongoose instance to work with
+* removeVersions: Removes versions when origin document is removed. Defaults to `false`
 * Options are passed to a newly created mongoose schemas as settings, so you may use any [option supported by mongoose](http://mongoosejs.com/docs/guide.html#options)
 
 In case you only want to specify the collection name, you can pass a string instance to options that is taken as collection name. Options may be passed as follows:
