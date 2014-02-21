@@ -42,6 +42,7 @@ model of page, for example for querying old versions of a document.
 * maxVersions: Only valid for `array` strategy. Specifies how many historic versions of a document should be kept. Defaults to `Number.MAX_VALUE`.
 * mongoose: Pass a mongoose instance to work with
 * removeVersions: Removes versions when origin document is removed. Defaults to `false`
+* ignorePaths: Defines an array of document field names that do not trigger a new version to be created when this field was changed. Only working with array strategy (default strategy). Defaults to `[]`.
 * Options are passed to a newly created mongoose schemas as settings, so you may use any [option supported by mongoose](http://mongoosejs.com/docs/guide.html#options)
 
 In case you only want to specify the collection name, you can pass a string instance to options that is taken as collection name. Options may be passed as follows:
