@@ -1,5 +1,5 @@
-# Passport-Local Mongoose [![Build Status](https://travis-ci.org/saintedlama/mongoose-version.png?branch=master)](https://travis-ci.org/saintedlama/mongoose-version)
-Mongoose plugin to save document data versions. Documents are saved to a "versioned" document collection before saving
+# Mongoose Version [![Build Status](https://travis-ci.org/saintedlama/mongoose-version.png?branch=master)](https://travis-ci.org/saintedlama/mongoose-version)
+Mongoose Version is a mongoose plugin to save document data versions. Documents are saved to a "versioned" document collection before saving
 original documents and kept for later use.
 
 ## Installation
@@ -49,7 +49,3 @@ In case you only want to specify the collection name, you can pass a string inst
 
     Page.plugin(version, { collection: 'Page__versions' });
 
-# Changelog
-* 0.2.0 Make `array` the default strategy and set `suppressVersionIncrement` default to true
-* 0.2.1 Corrects a problem of the used clone implementation when cloning models
-* 0.2.2 Changed deep-copy library to support sub-schema's. Added the option to pass a Mongoose instance.
