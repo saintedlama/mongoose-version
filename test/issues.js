@@ -145,4 +145,59 @@ describe('issues', function () {
             });
         });
     });
+
+    it('should ignore unique indexes in cloned model', function(done){
+        var UserSchema = new Schema({
+            module: {
+                type: Schema.Types.ObjectId,
+                required: true
+            },
+            slug: {
+                type: String,
+                required: true
+            }
+        });
+
+        UserSchema.index({
+            module: 1,
+            slug: 1
+        }, {
+            unique: true
+        });
+
+        UserSchema.plugin(version, {
+            logError: true,
+            collection: 'User_should_ignore_indexes_in_cloned_model_versions'
+        });
+
+        var User = mongoose.model('User_should_ignore_indexes_in_cloned_model', UserSchema);
+
+        var user = new User({
+            module: '538c5caa4f019dd4225fe4f7',
+            slug: 'test-module'
+        });
+
+        user.save(function (err) {
+            expect(err).to.not.exist;
+            console.log('saved');
+
+            user.remove(function (err) {
+                expect(err).to.not.exist;
+                var user = new User({
+                    module: '538c5caa4f019dd4225fe4f7',
+                    slug: 'test-module'
+                });
+                user.save(function (err, user) {
+                    expect(err).to.not.exist;
+
+                    User.VersionedModel.findOne({ refId : user._id }, function(err, model) {
+                        expect(err).to.not.exist;
+                        expect(model).to.be.not.empty;
+
+                        done();
+                    });
+                });
+            });
+        });
+    });
 });
