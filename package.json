@@ -21,6 +21,7 @@
     "chai": "~1.9.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --recursive -R spec test/",
+    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --recursive --report lcovonly -- -R spec"
   }
 }
