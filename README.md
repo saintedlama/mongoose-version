@@ -36,7 +36,6 @@ model of page, for example for querying old versions of a document.
 
 ## Option keys and defaults
 * collection: name of the collection to persist versions to. The default is 'versions'. You should supply this option if you're using mongoose-version on more than one schema.
-* logError: specifies if a console.log message should be written when the versioned model could not be persisted. Default `false`
 * suppressVersionIncrement: mongoose-version will not increment the version of the saved model before saving the model by default. To turn on auto version increment set this option to false. Default: `true`
 * strategy: mongoose-version allows versioned document to be saved as multiple documents in a collection or in a single document in a version array. In case you want to save documents in an array specify `array` strategy, for storing versioned documents in multiple documents specify `collection` strategy. Default `array`.
 * maxVersions: Only valid for `array` strategy. Specifies how many historic versions of a document should be kept. Defaults to `Number.MAX_VALUE`.
@@ -49,3 +48,13 @@ In case you only want to specify the collection name, you can pass a string inst
 
     Page.plugin(version, { collection: 'Page__versions' });
 
+## Misc
+
+### Debug Messages
+
+Mongoose-version uses the [debug module](https://github.com/visionmedia/debug) for debug messages. You can enable mongoose-version debug logs by setting the
+`DEBUG` environment variable to `mongoose:version`.
+
+    DEBUG=mongoose:version
+
+Debug messages are logged if a version was persisted to mongodb or a version was removed from mongodb.
