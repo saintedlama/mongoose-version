@@ -200,30 +200,4 @@ describe('issues', function () {
             });
         });
     });
-
-    it('should not break when using the plugin with collection strategy #10', function() {
-        var schema = new mongoose.Schema({
-          title: { type: String, required: true, trim: true },
-          content: { type: String, trim: true }
-        });
-
-        schema.plugin(version, { strategy: 'collection', collection: 'PageVersionsCollectionIssue10' });
-
-        var model = mongoose.model('PageIssue10CollectionStrategy', schema);
-
-        expect(model).to.exist;
-    });
-
-    it('should not break when using the plugin with array strategy #10', function() {
-        var schema = new mongoose.Schema({
-            title: { type: String, required: true, trim: true },
-            content: { type: String, trim: true }
-        });
-
-        schema.plugin(version, { strategy: 'array', collection: 'PageVersionsArrayIssue10' });
-
-        var model = mongoose.model('PageIssue10ArrayStrategy', schema);
-
-        expect(model).to.exist;
-    });
 });

@@ -12,13 +12,13 @@
     "version"
   ],
   "dependencies": {
-    "mongoose": "~3.8.12",
-    "debug": "~0.8.1"
+    "owl-deepcopy": "0.0.2",
+    "mongoose": "3.8.x"
   },
   "devDependencies": {
-    "mocha": "~1.20.0",
+    "mocha": "1.9.x",
     "mongoose-text-search": "0.0.2",
-    "chai": "~1.9.1"
+    "chai": "~1.9.0"
   },
   "scripts": {
     "test": "mocha --recursive -R spec test/",
