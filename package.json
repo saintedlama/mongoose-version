@@ -12,8 +12,9 @@
     "version"
   ],
   "dependencies": {
+    "debug": "~0.8.1",
     "mongoose": "~3.8.12",
-    "debug": "~0.8.1"
+    "xtend": "^4.0.0"
   },
   "devDependencies": {
     "mocha": "~1.20.0",
