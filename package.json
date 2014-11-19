@@ -17,12 +17,13 @@
     "xtend": "^4.0.0"
   },
   "devDependencies": {
+    "chai": "~1.9.1",
+    "istanbul": "^0.3.2",
     "mocha": "~1.20.0",
-    "mongoose-text-search": "0.0.2",
-    "chai": "~1.9.1"
+    "mongoose-text-search": "0.0.2"
   },
   "scripts": {
     "test": "mocha --recursive -R spec test/",
-    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --recursive --report lcovonly -- -R spec"
+    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --recursive -- -R spec"
   }
 }

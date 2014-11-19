@@ -104,6 +104,44 @@ describe('version', function() {
         });
     });
 
+    it('should save a version model in a collection when using "collection" strategy', function(done) {
+        var testSchema = new Schema({ name : String, desc: String });
+        testSchema.plugin(version, { strategy : 'collection', collection : 'should_save_version_in_collection' });
+
+        var Test = mongoose.model('should_save_version_in_collection_origin_model', testSchema);
+
+        var test = new Test({ name: 'franz' });
+        test.save(function(err) {
+            expect(err).to.not.exist;
+
+            Test.VersionedModel.find({refId : test._id}, function(err, versionedModels) {
+                expect(err).to.not.exist;
+                expect(versionedModels).to.be.ok;
+
+                expect(versionedModels.length).to.equal(1);
+
+                test.desc = 'A lunar crater';
+                test.save(function(err) {
+                    expect(err).to.not.exist;
+
+                    Test.VersionedModel.find({refId : test._id}, function(err, versionedModels) {
+                        expect(err).to.not.exist;
+                        expect(versionedModels).to.be.ok;
+
+                        expect(versionedModels.length).to.equal(2);
+
+                        // One of them should have the new property
+                        expect(versionedModels.filter(function (m) {
+                            return m.desc == 'A lunar crater'
+                        }).length).to.equal(1);
+
+                        done();
+                    });
+                });
+            });
+        });
+    });
+
     it('should keep maxVersions of version model in an array when using "array" strategy', function(done) {
         var testSchema = new Schema({ name : String });
         testSchema.plugin(version, { strategy : 'array', maxVersions : 1, collection : 'should_keep_only_max_versions' });
