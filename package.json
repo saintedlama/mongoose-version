@@ -12,7 +12,6 @@
     "version"
   ],
   "dependencies": {
-    "owl-deepcopy": "0.0.2",
     "mongoose": "3.8.x"
   },
   "devDependencies": {
