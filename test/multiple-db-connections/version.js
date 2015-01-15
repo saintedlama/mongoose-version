@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var mongotest = require('./mongotest');
-var version = require('../lib/version');
+var version = require('../../lib/version');
 
 describe('version', function() {
     beforeEach(mongotest.prepareDb('mongodb://localhost/mongoose_version_tests'));
@@ -13,7 +13,7 @@ describe('version', function() {
             var testSchema = new Schema();
             testSchema.plugin(version, { collection : 'should_expose_version_model_versions' });
             
-            var Test = mongoose.model('should_expose_version_model', testSchema);
+            var Test = mongotest.connection.model('should_expose_version_model', testSchema);
             
             expect(Test.VersionedModel).to.be.ok;
         });
@@ -23,7 +23,7 @@ describe('version', function() {
         var testSchema = new Schema({ name : String });
         testSchema.plugin(version, { collection : 'should_save_version_of_origin_model_versions' });
 
-        var Test = mongoose.model('should_save_version_of_origin_model', testSchema);
+        var Test = mongotest.connection.model('should_save_version_of_origin_model', testSchema);
 
         var test = new Test({ name: 'franz' });
         test.save(function(err) {
@@ -42,7 +42,7 @@ describe('version', function() {
         var testSchema = new Schema({ name : String });
         testSchema.plugin(version, { collection : 'should_save_version_of_origin_model_versions_twice' });
 
-        var Test = mongoose.model('should_save_version_of_origin_model_twice', testSchema);
+        var Test = mongotest.connection.model('should_save_version_of_origin_model_twice', testSchema);
 
         var test = new Test({ name: 'franz' });
         test.save(function(err) {
@@ -70,7 +70,7 @@ describe('version', function() {
         var testSchema = new Schema({ name : String });
         testSchema.plugin(version, 'should_accept_string');
 
-        var Test = mongoose.model('should_accept_string_origin_model', testSchema);
+        var Test = mongotest.connection.model('should_accept_string_origin_model', testSchema);
 
         expect(Test.VersionedModel.collection.name).to.equal('should_accept_string');
     });
@@ -87,7 +87,7 @@ describe('version', function() {
         var testSchema = new Schema({ name : String });
         testSchema.plugin(version, { strategy : 'array', collection : 'should_save_version_in_array' });
 
-        var Test = mongoose.model('should_save_version_in_array_origin_model', testSchema);
+        var Test = mongotest.connection.model('should_save_version_in_array_origin_model', testSchema);
 
         var test = new Test({ name: 'franz' });
         test.save(function(err) {
@@ -108,7 +108,7 @@ describe('version', function() {
         var testSchema = new Schema({ name : String, desc: String });
         testSchema.plugin(version, { strategy : 'collection', collection : 'should_save_version_in_collection' });
 
-        var Test = mongoose.model('should_save_version_in_collection_origin_model', testSchema);
+        var Test = mongotest.connection.model('should_save_version_in_collection_origin_model', testSchema);
 
         var test = new Test({ name: 'franz' });
         test.save(function(err) {
@@ -146,7 +146,7 @@ describe('version', function() {
         var testSchema = new Schema({ name : String });
         testSchema.plugin(version, { strategy : 'array', maxVersions : 1, collection : 'should_keep_only_max_versions' });
 
-        var Test = mongoose.model('should_keep_only_max_versions_origin_model', testSchema);
+        var Test = mongotest.connection.model('should_keep_only_max_versions_origin_model', testSchema);
 
         var test = new Test({ name: 'franz' });
         
@@ -177,7 +177,7 @@ describe('version', function() {
         var testSchema = new Schema({ name : String });
         testSchema.plugin(version, { strategy : 'array', documentProperty : 'name', collection : 'should_save_document_identifier_and_dates' });
 
-        var Test = mongoose.model('should_save_document_identifier_and_dates_model', testSchema);
+        var Test = mongotest.connection.model('should_save_document_identifier_and_dates_model', testSchema);
 
         var test = new Test({ name: 'franz' });
         test.save(function(err) {
