@@ -180,4 +180,6 @@ Page.index({
     }
 });
 
-module.exports = mongoose.model('schemausingtextsearchplugin', Page);
+module.exports = function(connection) {
+    return connection.model('schemausingtextsearchplugin', Page);
+};
