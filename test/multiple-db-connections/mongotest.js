@@ -1,6 +1,5 @@
 var assert = require('assert');
 var mongoose = require('mongoose');
-var connection;
 
 function dropCollections(collections, index, cb) {
     if (typeof(index) == 'function') {
@@ -9,7 +8,7 @@ function dropCollections(collections, index, cb) {
     }
 
     if (index < collections.length) {
-        connection.db.dropCollection(collections[index], function(err) {
+        module.exports.connection.db.dropCollection(collections[index], function(err) {
             assert.ifError(err);
 
             dropCollections(collections, index + 1, cb);
@@ -20,16 +19,17 @@ function dropCollections(collections, index, cb) {
 }
 
 module.exports = {
+    connection: {},
     prepareDb : function(connectionString, options) {
         options = options || {};
         options.timeout = options.timeout || 5000;
         return function(cb) {
             this.timeout(options.timeout);
 
-            connection = mongoose.createConnection(connectionString, function(err) {
+            module.exports.connection = mongoose.createConnection(connectionString, function(err) {
                 assert.ifError(err);
 
-                connection.db.collections(function(err, collections) {
+                module.exports.connection.db.collections(function(err, collections) {
                     assert.ifError(err);
 
                     var collectionsToDrop = collections
