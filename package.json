@@ -18,13 +18,14 @@
   "devDependencies": {
     "chai": "~1.9.1",
     "coveralls": "^2.11.9",
+    "cross-env": "^1.0.8",
     "istanbul": "^0.3.22",
     "mocha": "~1.20.0",
     "mocha-lcov-reporter": "^1.2.0",
     "mongoose-text-search": "0.0.2"
   },
   "scripts": {
-    "test": "mocha --recursive -R spec test/",
-    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --recursive -- -R spec"
+    "test": "cross-env NODE_ENV=test mocha --recursive -R spec test/",
+    "cover": "cross-env NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --recursive -- -R spec"
   }
 }
