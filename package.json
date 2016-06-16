@@ -15,6 +15,7 @@
     "debug": "~2.2.0"
   },
   "devDependencies": {
+    "async": "^2.0.0-rc.6",
     "chai": "~3.5.0",
     "coveralls": "^2.11.9",
     "cross-env": "^1.0.8",

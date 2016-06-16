@@ -3,17 +3,17 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var expect = require('chai').expect;
 
-var selectPaths = function (schema) {
+var selectPaths = function(schema) {
   var paths = [];
-  schema.eachPath(function (key, path) {
+  schema.eachPath(function(key, path) {
     paths.push(path);
   });
 
   return paths;
 };
 
-describe('clone-schema', function () {
-  it('should clone schema', function () {
+describe('clone-schema', function() {
+  it('should clone schema', function() {
     var testSchema = new Schema({ name: String, date: Date });
 
     var cloned = cloneSchema(testSchema);
@@ -21,7 +21,7 @@ describe('clone-schema', function () {
     expect(cloned).to.exist;
   });
 
-  it('should clone all schema path', function () {
+  it('should clone all schema path', function() {
     var testSchema = new Schema({ name: String, date: Date });
     var cloned = cloneSchema(testSchema);
 
@@ -29,7 +29,7 @@ describe('clone-schema', function () {
     expect(paths.length).to.equal(3); // 2 fields plus _id
   });
 
-  it('should clone all schema path with correct data types', function () {
+  it('should clone all schema path with correct data types', function() {
     var testSchema = new Schema({ name: String, date: Date });
     var cloned = cloneSchema(testSchema);
 
@@ -40,10 +40,10 @@ describe('clone-schema', function () {
     expect(datePath.options.type).to.equal(Date);
   });
 
-  it('should clone all schema path with required validators', function () {
+  it('should clone all schema path with required validators', function() {
     var testSchema = new Schema({
       name: { type: String, required: true },
-      date: { type: Date, required: true  }
+      date: { type: Date, required: true }
     });
 
     var cloned = cloneSchema(testSchema);
@@ -58,7 +58,7 @@ describe('clone-schema', function () {
     expect(datePath.validators.length).to.equal(1);
   });
 
-  it('should clone all schema path with custom validators', function () {
+  it('should clone all schema path with custom validators', function() {
     function validator(val) {
       return val;
     }
