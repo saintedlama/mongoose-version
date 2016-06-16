@@ -13,21 +13,23 @@ existing schema.
 
 The following schema definition defines a "Page" schema, and uses mongoose-version plugin with default options
 
-    var mongoose = require('mongoose'),
-        Schema = mongoose.Schema,
-        version = require('mongoose-version');
-    
-    var Page = new Schema({
-        title : { type : String, required : true},
-        content : { type : String, required : true },
-        path : { type : String, required : true},
-        tags : [String],
-    
-        lastModified : Date,
-        created : Date
-    });
-    
-    Page.plugin(version);
+```js
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var version = require('mongoose-version');
+
+var Page = new Schema({
+  title : { type : String, required : true},
+  content : { type : String, required : true },
+  path : { type : String, required : true},
+  tags : [String],
+
+  lastModified : Date,
+  created : Date
+});
+
+Page.plugin(version);
+```
 
 Mongoose-version will define a schema that has a refId field pointing to the original model and a version array containing
 cloned copies of the versioned model.
@@ -48,7 +50,9 @@ model of page, for example for querying old versions of a document.
 
 In case you only want to specify the collection name, you can pass a string instance to options that is taken as collection name. Options may be passed as follows:
 
-    Page.plugin(version, { collection: 'Page__versions' });
+```js
+Page.plugin(version, { collection: 'Page__versions' });
+```
 
 ## Misc
 
@@ -58,5 +62,9 @@ Mongoose-version uses the [debug module](https://github.com/visionmedia/debug) f
 `DEBUG` environment variable to `mongoose:version`.
 
     DEBUG=mongoose:version
+
+on Windows use
+
+    SET DEBUG=mongoose:version
 
 Debug messages are logged if a version was persisted to mongodb or a version was removed from mongodb.
