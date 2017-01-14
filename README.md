@@ -46,6 +46,7 @@ model of page, for example for querying old versions of a document.
 * mongoose: Pass a mongoose instance to work with
 * removeVersions: Removes versions when origin document is removed. Defaults to `false`
 * ignorePaths: Defines an array of document field names that do not trigger a new version to be created when this field was changed. Only working with array strategy (default strategy). Defaults to `[]`.
+* refIdType: The type of the `_id` field used in your document. Will be used to set the type of the refId. Defaults to `ObjectId`.
 * Options are passed to a newly created mongoose schemas as settings, so you may use any [option supported by mongoose](http://mongoosejs.com/docs/guide.html#options)
 
 In case you only want to specify the collection name, you can pass a string instance to options that is taken as collection name. Options may be passed as follows:
