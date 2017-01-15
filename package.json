@@ -12,17 +12,17 @@
     "version"
   ],
   "dependencies": {
-    "debug": "~2.2.0"
+    "debug": "~2.6.0"
   },
   "devDependencies": {
-    "async": "^2.0.0-rc.6",
+    "async": "^2.1.4",
     "chai": "~3.5.0",
-    "coveralls": "^2.11.9",
-    "cross-env": "^1.0.8",
-    "istanbul": "^0.4.3",
-    "mocha": "~2.5.3",
+    "coveralls": "^2.11.15",
+    "cross-env": "^3.1.4",
+    "istanbul": "^0.4.5",
+    "mocha": "~3.2.0",
     "mocha-lcov-reporter": "^1.2.0",
-    "mongoose": "~4.5.0",
+    "mongoose": "~4.7.6",
     "mongoose-text-search": "0.0.2"
   },
   "scripts": {
