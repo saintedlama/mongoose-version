@@ -1,7 +1,7 @@
 # Mongoose Version 
 
 [![Build Status](https://travis-ci.org/saintedlama/mongoose-version.png?branch=master)](https://travis-ci.org/saintedlama/mongoose-version) [![Coverage Status](https://coveralls.io/repos/saintedlama/mongoose-version/badge.png?branch=master)](https://coveralls.io/r/saintedlama/mongoose-version?branch=master)
-[![mongoose-version analyzed by Codellama.io](https://app.codellama.io/api/badges/5a00be42dd152a1afbd158d0/80cd7e12e0ecb0ccd758ae18f33d200d)](https://app.codellama.io/repositories/5a00be42dd152a1afbd158d0)
+[![mongoose-version analyzed by Codellama.io](https://app.codellama.io/api/badges/5a0439261b4c363a0f9427d5/701ecb565450af80551f9cbfe90e8294)](https://app.codellama.io/repositories/5a0439261b4c363a0f9427d5)
 
 Mongoose Version is a mongoose plugin to save document data versions. Documents are saved to a "versioned" document collection before saving
 original documents and kept for later use.
