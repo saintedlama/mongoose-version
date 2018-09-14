@@ -38,6 +38,25 @@ describe('version', function() {
     });
   });
 
+  it('should save a version model when saving origin model', function(done) {
+    var testSchema = new Schema({ name: String }, { versionKey: 'a_different_version_key' });
+    testSchema.plugin(version, { collection: 'should_save_version_of_origin_model_versions_diff_version_key' });
+
+    var Test = mongoose.model('should_save_version_of_origin_model_diff_version_key', testSchema);
+
+    var test = new Test({ name: 'franz' });
+    test.save(function(err) {
+      expect(err).to.not.exist;
+
+      Test.VersionedModel.find({ refId: test._id, refVersion: test.a_different_version_key }, function(err, versionedModel) {
+        expect(err).to.not.exist;
+        expect(versionedModel).to.be.ok;
+
+        done();
+      });
+    });
+  });
+
   it('should save a version model when saving origin model twice', function(done) {
     var testSchema = new Schema({ name: String });
     testSchema.plugin(version, { collection: 'should_save_version_of_origin_model_versions_twice' });
