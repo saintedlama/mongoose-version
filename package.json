@@ -1,7 +1,7 @@
 {
   "name": "mongoose-version",
   "description": "Mongoose plugin to save old versions of saved documents",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "lib/version.js",
   "repository": "git://github.com/saintedlama/mongoose-version.git",
   "author": "Christoph Walcher <christoph.walcher@gmail.com>",
