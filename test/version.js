@@ -200,9 +200,7 @@ describe('version', function() {
 
   it('should save versions of different schemas in the same collection when dbCollection property is passed', function(done) {
     function AbstractPersonSchema() {
-      Schema.apply(this, [arguments, {
-        discriminatorKey: 'personType'
-      }]);
+      Schema.apply(this, arguments);
 
       this.add({
         name: String
@@ -218,34 +216,32 @@ describe('version', function() {
     var employeeSchema = new AbstractPersonSchema({employeeId: String});
     employeeSchema.plugin(version, { strategy: 'collection', model: 'Employee', dbCollection: 'people__versions' });
 
-    var Employee = Person.discriminator('employee', employeeSchema);
+    var Employee = Person.discriminator('employee', employeeSchema, 'personType');
 
     var employee = new Employee({ name: 'John Smith', employeeId: 1 });
 
     var studentSchema = new AbstractPersonSchema({studentId: String});
     studentSchema.plugin(version, { strategy: 'collection', model: 'Student', dbCollection: 'people__versions' });
 
-    var Student = Person.discriminator('student', studentSchema);
+    var Student = Person.discriminator('student', studentSchema, 'personType');
 
     var student = new Student({ name: 'Amy Adams', studentId: 2 });
 
     employee.save(function(err) {
       expect(err).to.not.exist;
 
-      Employee.VersionedModel.find({ refId: employee._id }, function(err, versionedModels) {
+      Employee.VersionedModel.find({ }, function(err, versionedModels) {
         expect(err).to.not.exist;
         expect(versionedModels).to.be.ok;
-
         expect(versionedModels.length).to.equal(1);
 
         student.save(function(err) {
           expect(err).to.not.exist;
     
-          Student.VersionedModel.find({ refId: student._id }, function(err, versionedModels) {
+          Student.VersionedModel.find({ }, function(err, versionedModels) {
             expect(err).to.not.exist;
             expect(versionedModels).to.be.ok;
-    
-            expect(versionedModels.length).to.equal(1);
+            expect(versionedModels.length).to.equal(2);
     
             done();
           });
