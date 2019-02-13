@@ -41,7 +41,8 @@ Mongoose-version will add a static field to Page, that is "VersionedModel" that 
 model of page, for example for querying old versions of a document.
 
 ## Option keys and defaults
-* collection: name of the collection to persist versions to. The default is 'versions'. You should supply this option if you're using mongoose-version on more than one schema.
+* model/collection: name of the model. By default, mongoose pluralizes the model name and initializes that as the collection name. The default value is 'versions'. You should supply this option if you're using mongoose-version on more than one schema.
+* dbCollection: name of the model. Use this to override the collection name.
 * suppressVersionIncrement: mongoose-version will not increment the version of the saved model before saving the model by default. To turn on auto version increment set this option to false. Default: `true`
 * suppressRefIdIndex: mongoose-version will not index the refId field by default. To turn on indexing on refId set this option to false. Default: `true`
 * strategy: mongoose-version allows versioned document to be saved as multiple documents in a collection or in a single document in a version array. In case you want to save documents in an array specify `array` strategy, for storing versioned documents in multiple documents specify `collection` strategy. Default `array`.
